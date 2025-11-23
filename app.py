@@ -3,12 +3,10 @@ import requests
 
 app = Flask(__name__)
 
-GEO_KEY = "2e64e356f56a4087b33e18a0b33163ba"   # <<< PUT YOUR KEY HERE
+GEO_KEY = "2e64e356f56a4087b33e18a0b33163ba"   
 USER_AGENT = "TravelChatbot/1.0 (aayushi310703@gmail.com)"
 
-# ------------------------------------------------
-# 1. CITY DETECTION (Geoapify – always works)
-# ------------------------------------------------
+
 def detect_city(q):
     url = "https://api.geoapify.com/v1/geocode/search"
     params = {
@@ -31,9 +29,7 @@ def detect_city(q):
     return name, lat, lon
 
 
-# ------------------------------------------------
-# WEATHER (Open-Meteo)
-# ------------------------------------------------
+
 def get_weather(lat, lon):
     try:
         r = requests.get(
@@ -45,9 +41,6 @@ def get_weather(lat, lon):
         return None
 
 
-# ------------------------------------------------
-# TOURIST PLACES (Overpass)
-# ------------------------------------------------
 def get_tourist_places(lat, lon):
     try:
         query = f"""
@@ -80,9 +73,7 @@ def get_tourist_places(lat, lon):
         return []
 
 
-# ------------------------------------------------
-# CHATBOT LOGIC
-# ------------------------------------------------
+
 def process_message(msg):
     city, lat, lon = detect_city(msg)
 
@@ -115,15 +106,12 @@ def process_message(msg):
     return "\n\n".join(reply)
 
 
-# ------------------------------------------------
-# FRONTEND
-# ------------------------------------------------
 html = """
 <!DOCTYPE html>
 <html>
 <head><title>Travel Chatbot</title></head>
 <body style="font-family: Arial; margin: 40px;">
-    <h2>🌍 Travel & Weather Chatbot</h2>
+    <h2>Travel & Weather Chatbot</h2>
 
     <form method="POST">
         <input name="msg" style="width: 60%; padding: 10px;" placeholder="tourist places in Mumbai">
